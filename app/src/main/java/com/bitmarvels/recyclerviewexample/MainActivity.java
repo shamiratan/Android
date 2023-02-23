@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerview=findViewById(R.id.recyclerContact);
         btnOpenDialog = findViewById(R.id.btnOpenDialog);
+//        Log.d("checking object", String.valueOf(btnOpenDialog));
+//        Log.d("checking object", "jUST cHECKING SOME VALUES");
 
         btnOpenDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,28 +48,35 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         String name="", number="";
 
+// Note : This First Condition will check if the Name is Entered or Not. If Not entered then the Toast will be Served to the user that name is Not Entered.
                         if (!edtName.getText().toString().equals(""))
                         {
+//                            Log.d("if condition", "I am inside If");
                             name = edtName.getText().toString();
-                        }
-                        else {
+//                            Toast.makeText(MainActivity.this,"The Entered Name is : "+name, Toast.LENGTH_LONG).show();
+                        } else {
+//                            Log.d("if condition", "I am inside Else");
                             Toast.makeText(MainActivity.this,"Please Enter Contact Name", Toast.LENGTH_LONG).show();
                         }
 
+// Note : This Second Condition will check if the Number is Entered or Not. If Not entered then the Toast will be Served to the user that Number is Not Entered.
                         if (!edtNumber.getText().toString().equals(""))
                         {
                             number = edtNumber.getText().toString();
-                        }
-                        else {
+                        } else {
                             Toast.makeText(MainActivity.this,"Please Enter Contact Number", Toast.LENGTH_LONG).show();
                         }
 
-                        arrContacts.add(new ContactModel(name, number));
+// Note : This Third Condition will automatically become true if there is Data in "name" & "number" variables.
+// And when both the values are received then values will be added to the Array
+                        if (!edtName.getText().toString().equals("") && !edtNumber.getText().toString().equals(""))
+                        {
+                            arrContacts.add(new ContactModel(name, number));
 //                        adapter.notifyItemInserted( arrContacts.size()-1 );
-                        recyclerview.scrollToPosition( arrContacts.size()-1 );
-                        dialog.dismiss();
-                        Toast.makeText(MainActivity.this,"Student added at position :"+ (arrContacts.size()-1), Toast.LENGTH_LONG).show();
-
+                            recyclerview.scrollToPosition( arrContacts.size()-1 );
+                            dialog.dismiss();
+                            Toast.makeText(MainActivity.this,"Student added at position :"+ (arrContacts.size()-1), Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
                         dialog.show();
